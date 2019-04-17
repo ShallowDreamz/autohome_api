@@ -1,0 +1,109 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <title>xx信息查询</title>
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/ai/ai-lib.js"></script>
+    <!--<script src="/js/cheat-order.js"></script>-->
+
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/table.css" type="text/css"/>
+    <script>
+        $(function () {
+            $('#btSearch').click(function () {
+                /*var checkDate = $('#checkDate').val();
+                var orderNo = $('#orderNo').val();
+                var sortFiled = $('#sortFiled').val();
+                var hotelSeq = $('#hotelSeq').val();*/
+                var tbody = window.document.getElementById("tbody-result");
+
+                $.ajax({
+                    type: "get",
+                    /*dataType: "json",*/
+                    contentType: "application/x-www-form-urlencoded",
+                    url: "http://localhost:8080/read?path=E:\\upload\\zhb.xlsx",
+                    /*data: "{\"hotelSeq\":\"" + hotelSeq
+                    + "\",\"orderNo\":\"" + orderNo
+                    + "\",\"sortFiled\":\"" + sortFiled
+                    + "\",\"checkDate\":\"" + checkDate
+                    + "\"}",*/
+                    success: function (data) {
+                        var str = "";
+                        for (i in data) {
+                            str += "<tr>" +
+                                "<td align='center'>" + data[i].code + "</td>" +
+                                "<td align='center'>" + data[i].message + "</td>" +
+                                /*"<td align='center'>" + data[i].orderNo + "</td>" +
+                                 "<td align='center'>" + data[i].userPhone + "</td>" +
+                                 "<td align='center'>" + data[i].createTime + "</td>" +
+                                 "<td align='center'>" + data[i].userId + "</td>" +
+                                 "<td align='center'>" + data[i].cellid + "</td>" +
+                                 "<td align='center'>" + data[i].gpsCity + "</td>" +
+                                   */
+                                "</tr>";
+                        }
+                        tbody.innerHTML = str;
+                    }
+                })
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+
+<form>
+
+    <table id="table-search" width="80%" align="center" border="1">
+        <!--<tr>
+            <td>预定截止日期</td>
+            <td><input name="checkDate" type="text" id="checkDate"></td>
+        </tr>
+        <tr>
+            <td>SEQ</td>
+            <td><input name="hotelSeq" id="hotelSeq" type="text"></td>
+        </tr>
+        <tr>
+            <td>订单号</td>
+            <td><input type="text" maxlength="50" name="orderNo" id="orderNo"></td>
+        </tr>
+        <tr>
+            <td>排序字段</td>
+            <td><select name="sortFiled" id="sortFiled">
+                <option value="hotelSeq">酒店seq</option>
+                <option value="orderNo">订单号</option>
+                <option value="cellid">cellid</option>
+            </select></td>
+        </tr>-->
+        <tr>
+           <!-- <td></td>-->
+            <td>
+                <input type="button" value="搜索" id="btSearch" class="ui right floated positive button btn-search"/>
+            </td>
+        </tr>
+    </table>
+
+</form>
+
+<br/>
+
+<table id="table-result" width="80%" align="center" border="1">
+    <tr>
+        <th>code</th>
+        <th>message</th>
+        <!--<th>订单号</th>
+        <th>联系人手机号</th>
+        <th>预定时间</th>
+        <th>userId</th>
+        <th>cellid</th>
+        <th>gps定位城市</th>
+        <th>wifi定位城市</th>
+        <th>定位距离</th>-->
+    </tr>
+    <tbody id="tbody-result">
+    </tbody>
+</table>
+
+</body>
+</html>

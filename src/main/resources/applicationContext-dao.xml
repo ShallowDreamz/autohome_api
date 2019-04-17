@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+    <!-- 处理property -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:db.properties</value>
+                <value>classpath:appkey.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置数据源 -->
+    <bean id="dataSource"  class="org.apache.commons.dbcp.BasicDataSource" >
+        <property name="driverClassName" value="${mysql.dbdriver}"/>
+        <property name="url" value="${mysql.dburl}"/>
+        <property name="username" value="${mysql.dbUserName}"/>
+        <property name="password" value="${mysql.password}"/>
+        <property name="maxActive" value="${mysql.maxActive}" />
+        <property name="maxIdle" value="${mysql.maxIdle}" />
+        <property name="minIdle" value="${mysql.minIdle}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${mysql.timeBetweenEvictionRunsMillis}" />
+        <!-- 注意此参数的配置 -->
+        <property name="minEvictableIdleTimeMillis" value="${mysql.minEvictableIdleTimeMillis}" />
+    </bean>
+
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource"  ref="dataSource"></property>
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
+        <property name="mapperLocations" value="classpath*:mybatis/*.xml"></property>
+    </bean>
+
+    <!-- 配置扫描包，加载pojo代理对象 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.autohome_api.dao"></property>
+    </bean>
+
+</beans>
