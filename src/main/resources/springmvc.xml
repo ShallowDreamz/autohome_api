@@ -47,4 +47,11 @@
 			</list>
 		</property>
 	</bean>
+	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/userLogin"/>
+			<bean class="com.autohome_api.web.interceptor.LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

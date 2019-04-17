@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.autohome_api.dao.LoginLogsMapping">
+    <resultMap id="LoginLogsResultMap" type="com.autohome_api.dto.LoginLogs" >
+        <id column="loginLogId" property="loginLogId" jdbcType="INTEGER" />
+        <result column="loginName" property="loginName" jdbcType="VARCHAR" />
+        <result column="loginIp" property="loginIp" jdbcType="VARCHAR" />
+        <result column="loginTime" property="loginTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="loginLogsColumnList">
+        loginLogId, loginName, loginIp, loginTime
+    </sql>
+
+    <insert id="insertLoginLogs" parameterType="com.autohome_api.dto.LoginLogs" >
+        <selectKey keyProperty="loginLogId" resultType="long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert loginLogs (loginName,loginIp,loginTime)values (#{loginName},#{loginIp},#{loginTime})
+    </insert>
+</mapper>
